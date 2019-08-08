@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LATIHAN BLOCKLY</title>
+    <script src="blockly_compressed.js"></script>
+    <script src="blocks_compressed.js"></script>
+    <script src="msg/js/en.js"></script>
+    <script src="javascript_compressed.js"></script>
+    <script src="test_blocks.js"></script>
+
+<style>
+        #red{
+          height: 30px;
+          width:30px;
+          border-radius: 50%;
+          background-color: white;
+          border: solid 1px black;
+          float: left;
+          margin: 10px;
+        }
+        #yellow{
+          height: 30px;
+          width:30px;
+          border-radius: 50%;
+          background-color: white;
+          border: solid 1px black;
+          float: left;
+          margin: 10px;
+        }
+        #green{
+          height: 30px;
+          width:30px;
+          border-radius: 50%;
+          background-color: white;
+          border: solid 1px black;
+          float: left;
+          margin: 10px;
+        }
+        #capacity {
+          color: red;
+        }
+</style>
+</head>
+<body>
+     <p><button onclick="showCode()">Show Javascript</button><button onclick="runCode()">Run Javascript</button></p>
+     <b>You have <span id="capacity"></span> block(s) left.</b>
+     <div id="blocklyDiv" style="height: 480px; width: 600px;"></div>
+     <xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+      <category name="Colour">
+        <block type="lightswitch">
+          <field name="lightcolor">red</field>
+          <field name="switch">on</field>
+        </block>
+        <block type="switch">
+          <field name="switch">red</field>
+  </block>
+      </category>
+      <category name="Variable" colour='#65c81' custom=VARIABLE></category>
+    </xml>
+    <div id="resultBox">
+      <div id="red"></div>
+      <div id="yellow"></div>
+      <div id="green"></div>
+  </div>
+
+        <script>
+            //ini merupakan varibel untuk membuat workspace secara MENYELURUH
+                var workspace = Blockly.inject('blocklyDiv', { 
+	                toolbox: document.getElementById('toolbox'), 
+	                collapse : true, 
+                    comments : true, 
+                    disable : true, 
+                    maxBlocks : Infinity, 
+                    trashcan : true, 
+                    horizontalLayout : false, 
+                    toolboxPosition : 'start', 
+                    css : true, 
+                    media : 'media/', 
+                    rtl : false, 
+                    scrollbars : true, 
+                    sounds : true, 
+                    oneBasedIndex : true, 
+                    maxBlocks: 2,
+                    zoom : {
+                        controls : true, 
+                        wheel : true, 
+                        startScale : 1, 
+                        maxScale : 3, 
+                        minScale : 0.3, 
+                        scaleSpeed : 1.2
+                    }});
+                    
+                    //FUNGSI UNTUK MENAMPILKAN BATASAN BLOCK
+                    function onchange(event) {
+                      document.getElementById('capacity').textContent =
+                      workspace.remainingCapacity();
+                     }
+
+                     workspace.addChangeListener(onchange);
+                      onchange();
+                   
+    function showCode(){
+           //digunakan untuk membaca code melalui alert
+            Blockly.JavaScript.INFINITE_LOOP_TRAP=null;
+            //Blockly.JavaScript.valueToCode(block, 'FROM', Blockly.JavaScript.ORDER_ADDITION) || '0'
+            alert(Blockly.JavaScript.workspaceToCode(workspace));
+            // alert(code);  
+          }
+
+          function runCode(){
+            if(document.getElementById('red').style.backgroundColor=="red"&&document.getElementById('yellow').style.backgroundColor=="yellow"&& document.getElementById('green').style.backgroundColor=="green"){
+              alert("YOU GOT IT...!!!");
+            }else{
+
+            
+            //alert("ini bisa kok!!");
+            window.LoopTrap = 1000;
+              Blockly.JavaScript.INFINITE_LOOP_TRAP = 'if(--window.LoopTrap == 0) throw "Infinite loop.";\n';
+              Blockly.JavaScript.addReservedWords('code');
+              var code = Blockly.JavaScript.workspaceToCode(workspace);
+              try {
+                eval(code);
+              } catch (e) {
+                alert(e);
+              }
+          }
+        }
+              </script>
+</body>
+</html>

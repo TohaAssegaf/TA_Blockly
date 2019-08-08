@@ -1,0 +1,8 @@
+<xml xmlns="https://developers.google.com/blockly/xml" id="toolbox" style="display: none">
+  <category name="Colour">
+    <block type="lightswitch">
+      <field name="lightcolor">red</field>
+      <field name="switch">on</field>
+    </block>
+  </category>
+</xml>
